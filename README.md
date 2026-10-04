@@ -14,10 +14,15 @@ npm run dev
 ## Environment Variables
 
 ```
-VITE_API_URL=http://localhost:5000/api
+VITE_API_URL=https://medimoove-backend.onrender.com/api
 VITE_MAPBOX_KEY=your_mapbox_public_key
 VITE_PAYSTACK_PUBLIC_KEY=pk_test_your_key
 ```
+
+`VITE_API_URL` is optional. If it is omitted, or if an old local value such as
+`http://localhost:5000/api` is present, the app safely uses the Medimoove Render
+backend: `https://medimoove-backend.onrender.com/api`.
+
 
 ## Build
 

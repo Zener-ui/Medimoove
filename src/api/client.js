@@ -2,7 +2,16 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useAuthStore } from "@/store/authStore";
 
-const BASE_URL = import.meta.env.VITE_API_URL || "https://medimoove-backend.onrender.com/api";
+// Production backend. A localhost value can be left in a developer's
+// old .env/.env.local without silently breaking the Medimoove frontend.
+// Localhost is only valid when the backend is intentionally being run on
+// the same machine; the deployed Medimoove backend is the default target.
+const configuredApiUrl = String(import.meta.env.VITE_API_URL || "").trim();
+const isLocalApi = /^(https?:\/\/)?(localhost|127\.0\.0\.1)(:\d+)?(\/|$)/i.test(configuredApiUrl);
+const BASE_URL =
+  configuredApiUrl && !isLocalApi
+    ? configuredApiUrl.replace(/\/$/, "")
+    : "https://medimoove-backend.onrender.com/api";
 
 const client = axios.create({
   baseURL: BASE_URL,
