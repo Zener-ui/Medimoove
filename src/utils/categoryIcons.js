@@ -22,14 +22,6 @@ export const CATEGORY_LABELS = {
   "other-healthcare": "Other Healthcare Supplies",
 };
 
-export function getHealthcareCategoryName(category) {
-  const value = category && typeof category === "object"
-    ? (category.slug || category.name || category.category || "")
-    : category;
-  const key = String(value || "").toLowerCase().trim();
-  return CATEGORY_LABELS[key] || (typeof value === "string" && value ? value : "Other Healthcare Supplies");
-}
-
 export function getCategoryIcon(category) {
   const key = String(category || "").toLowerCase().trim();
   return CATEGORY_ICONS[key] || CATEGORY_ICONS["other-healthcare"];
