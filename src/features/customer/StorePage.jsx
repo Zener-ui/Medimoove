@@ -3,7 +3,7 @@ import { Store, BadgeCheck, Star, MapPin, Truck, Calendar, PackageCheck, Phone, 
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getVendor } from "@/api/vendors";
-import { getVendorProvider reviews, getVendorRatingSummary } from "@/api/reviews";
+import { getVendorReviews, getVendorRatingSummary } from "@/api/reviews";
 import { getAvailabilityDisplay, formatDate } from "@/utils";
 import { getCategoryIcon, getHealthcareCategoryName } from "@/utils/categoryIcons";
 import { setReferredVendor } from "@/utils/referral";
@@ -11,7 +11,7 @@ import PublicCartButton from "@/components/common/PublicCartButton";
 import TopBar from "@/components/layout/TopBar";
 import Button from "@/components/common/Button";
 import RatingBreakdown from "@/components/common/RatingBreakdown";
-import Provider reviewCard from "@/components/common/Provider reviewCard";
+import ReviewCard from "@/components/common/ReviewCard";
 import ErrorState from "@/components/common/ErrorState";
 import Loader, { Skeleton } from "@/components/common/Loader";
 import EmptyState from "@/components/common/EmptyState";
@@ -62,7 +62,7 @@ export default function StorePage() {
 
   const { data: reviewsData, isLoading: reviewsLoading } = useQuery({
     queryKey: ["store-reviews", id, sort, withPhotos, page],
-    queryFn: () => getVendorProvider reviews(id, { sort, page, limit: 10, with_photos: withPhotos ? "true" : undefined }),
+    queryFn: () => getVendorReviews(id, { sort, page, limit: 10, with_photos: withPhotos ? "true" : undefined }),
     enabled: !!id,
     keepPreviousData: true,
   });
@@ -181,7 +181,7 @@ export default function StorePage() {
       <div className="px-4 md:px-8 mt-6">
         <h2 className="text-ink font-display font-semibold mb-3">Ratings & Provider reviews</h2>
         {summary ? (
-          <RatingBreakdown average={summary.average} totalProvider reviews={summary.total_reviews} breakdown={summary.breakdown} />
+          <RatingBreakdown average={summary.average} totalReviews={summary.total_reviews} breakdown={summary.breakdown} />
         ) : (
           <Skeleton className="h-24 rounded-2xl" />
         )}
@@ -212,7 +212,7 @@ export default function StorePage() {
           <EmptyState icon={Star} title="No reviews yet" description={withPhotos ? "No reviews with photos yet." : "Be the first to order and leave a review."} />
         ) : (
           <div className="space-y-3">
-            {reviews.map((r) => <Provider reviewCard key={r.id} review={r} />)}
+            {reviews.map((r) => <ReviewCard key={r.id} review={r} />)}
           </div>
         )}
 
