@@ -26,3 +26,8 @@ export function getCategoryIcon(category) {
   const key = String(category || "").toLowerCase().trim();
   return CATEGORY_ICONS[key] || CATEGORY_ICONS["other-healthcare"];
 }
+
+export function getHealthcareCategoryName(category) {
+  const key = String(category || "").toLowerCase().trim();
+  return CATEGORY_LABELS[key] || category || "Healthcare Supplies";
+}
