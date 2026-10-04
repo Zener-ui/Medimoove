@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#1a2596" />
+    <meta name="description" content="Medimoove — Healthcare logistics and medical supply delivery" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&display=swap" rel="stylesheet" />
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css" rel="stylesheet" />
+    <title>Medimoove</title>
+    <style>
+      #initial-preloader { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; background: #f7f6f1; transition: opacity 0.35s ease; }
+      #initial-preloader.fade-out { opacity: 0; pointer-events: none; }
+      #initial-preloader .mark { display: flex; align-items: center; gap: 10px; animation: cm-pulse 1.4s ease-in-out infinite; }
+      #initial-preloader .dot { width: 34px; height: 34px; border-radius: 10px; background: #1a2596; display: flex; align-items: center; justify-content: center; }
+      #initial-preloader .dot svg { width: 20px; height: 20px; }
+      #initial-preloader .wordmark { font-family: "Geist", sans-serif; font-weight: 700; font-size: 22px; color: #10143f; letter-spacing: -0.02em; }
+      @keyframes cm-pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(0.96); } }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <div id="initial-preloader" aria-hidden="true">
+      <div class="mark">
+        <div class="dot">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 4h2l2.4 12.2a2 2 0 0 0 2 1.6h7.2a2 2 0 0 0 2-1.6L20 8H6" stroke="#f7f6f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="9" cy="20" r="1.4" fill="#f7f6f1"/>
+            <circle cx="17" cy="20" r="1.4" fill="#f7f6f1"/>
+          </svg>
+        </div>
+        <div class="wordmark">Medimoove</div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
