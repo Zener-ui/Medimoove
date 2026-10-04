@@ -2,16 +2,9 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useAuthStore } from "@/store/authStore";
 
-// Production backend. A localhost value can be left in a developer's
-// old .env/.env.local without silently breaking the Medimoove frontend.
-// Localhost is only valid when the backend is intentionally being run on
-// the same machine; the deployed Medimoove backend is the default target.
-const configuredApiUrl = String(import.meta.env.VITE_API_URL || "").trim();
-const isLocalApi = /^(https?:\/\/)?(localhost|127\.0\.0\.1)(:\d+)?(\/|$)/i.test(configuredApiUrl);
-const BASE_URL =
-  configuredApiUrl && !isLocalApi
-    ? configuredApiUrl.replace(/\/$/, "")
-    : "https://medimoove-backend.onrender.com/api";
+// Medimoove production API. Keep this explicit so an old VITE_API_URL,
+// .env.local, or Vite proxy cannot redirect API calls to localhost.
+const BASE_URL = "https://medimoove-backend.onrender.com/api";
 
 const client = axios.create({
   baseURL: BASE_URL,
@@ -40,17 +33,8 @@ client.interceptors.response.use(
     const requestId = error.response?.headers?.["x-request-id"] || null;
     const requestUrl = error.config?.url || "";
     const suppressToast = error.config?.suppressToast === true;
-
-    // A failed login is a normal authentication error, not an expired
-    // session. Never clear an existing session just because /auth/login
-    // returned 401. This also prevents an invalid login attempt on one
-    // screen from looking like a session-expiry event.
     const isLoginRequest = /\/auth\/login(?:$|[?])/i.test(requestUrl);
 
-    // Only force logout when the protected API explicitly tells us the
-    // presented session token is unusable. Other 401s are returned to the
-    // caller untouched so the UI can handle them without destroying a
-    // perfectly valid local session.
     const shouldLogoutForAuth =
       status === 401 &&
       !isLoginRequest &&
@@ -72,7 +56,6 @@ client.interceptors.response.use(
       });
     }
 
-    // Server error
     if (status >= 500 && !suppressToast) {
       toast.error("Server error. Please try again shortly.");
     }
